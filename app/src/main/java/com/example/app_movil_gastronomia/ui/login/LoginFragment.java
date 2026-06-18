@@ -8,15 +8,98 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.example.app_movil_gastronomia.R;
+import com.example.app_movil_gastronomia.core.UiState;
+import com.example.app_movil_gastronomia.data.dto.LoginResponse;
+import com.example.app_movil_gastronomia.databinding.FragmentLoginBinding;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class LoginFragment extends Fragment {
+
+    private FragmentLoginBinding binding;
+    private LoginViewModel viewModel;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_login, container, false);
+        binding = FragmentLoginBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+
+        binding.buttonLogin.setOnClickListener(v -> attemptLogin());
+
+        viewModel.getLoginState().observe(getViewLifecycleOwner(), this::handleState);
+    }
+
+    private void attemptLogin() {
+        String username = binding.editUsername.getText() != null
+                ? binding.editUsername.getText().toString().trim() : "";
+        String password = binding.editPassword.getText() != null
+                ? binding.editPassword.getText().toString() : "";
+
+        binding.textError.setVisibility(View.GONE);
+        viewModel.login(username, password);
+    }
+
+    private void handleState(UiState<LoginResponse> state) {
+        if (state == null) return;
+
+        switch (state.getStatus()) {
+            case LOADING:
+                showLoading(true);
+                break;
+            case SUCCESS:
+                showLoading(false);
+                navigateByRole(state.getData().getRolNombre());
+                break;
+            case ERROR:
+                showLoading(false);
+                showError(state.getError());
+                break;
+        }
+    }
+
+    private void navigateByRole(String rolNombre) {
+        int destinationId;
+        if ("Cajero".equalsIgnoreCase(rolNombre)) {
+            destinationId = R.id.action_nav_login_to_nav_cajero_home;
+        } else if ("Cocina".equalsIgnoreCase(rolNombre)) {
+            destinationId = R.id.action_nav_login_to_nav_cocina_home;
+        } else if ("Repartidor".equalsIgnoreCase(rolNombre)) {
+            destinationId = R.id.action_nav_login_to_nav_repartidor_home;
+        } else {
+            // Unknown role — default to Cajero home with a warning
+            destinationId = R.id.action_nav_login_to_nav_cajero_home;
+        }
+
+        Navigation.findNavController(requireView()).navigate(destinationId);
+    }
+
+    private void showLoading(boolean loading) {
+        binding.progressBar.setVisibility(loading ? View.VISIBLE : View.GONE);
+        binding.buttonLogin.setEnabled(!loading);
+    }
+
+    private void showError(String message) {
+        binding.textError.setVisibility(View.VISIBLE);
+        binding.textError.setText(message != null ? message : getString(R.string.error_generic));
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }
