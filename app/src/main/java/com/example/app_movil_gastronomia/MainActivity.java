@@ -11,6 +11,9 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.app_movil_gastronomia.databinding.ActivityMainBinding;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
