@@ -1,7 +1,7 @@
 package com.example.app_movil_gastronomia.ui.login;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.app_movil_gastronomia.core.UiState;
@@ -17,7 +17,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 public class LoginViewModel extends ViewModel {
 
     private final AuthRepository authRepository;
-    private final MutableLiveData<UiState<LoginResponse>> loginState = new MutableLiveData<>();
+    private final MediatorLiveData<UiState<LoginResponse>> loginState = new MediatorLiveData<>();
 
     @Inject
     public LoginViewModel(AuthRepository authRepository) {
@@ -39,11 +39,12 @@ public class LoginViewModel extends ViewModel {
             return;
         }
         if (password == null || password.length() < 6) {
-            loginState.setValue(UiState.error("La contrase\u00f1a debe tener al menos 6 caracteres"));
+            loginState.setValue(UiState.error("La contraseña debe tener al menos 6 caracteres"));
             return;
         }
 
         LoginRequest request = new LoginRequest(username.trim(), password);
-        authRepository.login(request).observeForever(loginState::setValue);
+        LiveData<UiState<LoginResponse>> source = authRepository.login(request);
+        loginState.addSource(source, loginState::setValue);
     }
 }
