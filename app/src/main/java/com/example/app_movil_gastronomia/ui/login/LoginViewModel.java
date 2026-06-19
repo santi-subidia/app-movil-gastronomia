@@ -1,7 +1,7 @@
 package com.example.app_movil_gastronomia.ui.login;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.app_movil_gastronomia.core.UiState;
@@ -17,7 +17,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 public class LoginViewModel extends ViewModel {
 
     private final AuthRepository authRepository;
-    private final MediatorLiveData<UiState<LoginResponse>> loginState = new MediatorLiveData<>();
+    private final MutableLiveData<UiState<LoginResponse>> loginState = new MutableLiveData<>();
 
     @Inject
     public LoginViewModel(AuthRepository authRepository) {
@@ -44,7 +44,6 @@ public class LoginViewModel extends ViewModel {
         }
 
         LoginRequest request = new LoginRequest(username.trim(), password);
-        LiveData<UiState<LoginResponse>> source = authRepository.login(request);
-        loginState.addSource(source, loginState::setValue);
+        authRepository.login(request).observeForever(loginState::setValue);
     }
 }

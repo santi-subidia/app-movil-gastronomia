@@ -1,7 +1,7 @@
 package com.example.app_movil_gastronomia.ui.cajero;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.app_movil_gastronomia.core.UiState;
@@ -18,7 +18,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 public class ProductListViewModel extends ViewModel {
 
     private final ProductoRepository productoRepository;
-    private final MediatorLiveData<UiState<List<ProductoDto>>> productState = new MediatorLiveData<>();
+    private final MutableLiveData<UiState<List<ProductoDto>>> productState = new MutableLiveData<>();
 
     @Inject
     public ProductListViewModel(ProductoRepository productoRepository) {
@@ -31,8 +31,7 @@ public class ProductListViewModel extends ViewModel {
     }
 
     public void loadProductos() {
-        LiveData<UiState<List<ProductoDto>>> source = productoRepository.getProductos();
-        productState.addSource(source, productState::setValue);
+        productoRepository.getProductos().observeForever(productState::setValue);
     }
 
     public void retry() {
