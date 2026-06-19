@@ -2,4 +2,16 @@
     <string name="app_name">app-movil-gastronomia</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- Login -->
+    <string name="login_title">Iniciar sesi\u00f3n</string>
+    <string name="hint_username">Usuario</string>
+    <string name="hint_password">Contrase\u00f1a</string>
+    <string name="button_login">Ingresar</string>
+
+    <!-- Product list -->
+    <string name="no_products_available">No hay productos disponibles</string>
+    <string name="error_generic">Error del servidor, intente m\u00e1s tarde</string>
+    <string name="retry">Reintentar</string>
+    <string name="fab_content_description">Action</string>
 </resources>
