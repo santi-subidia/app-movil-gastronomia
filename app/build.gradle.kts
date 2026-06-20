@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.logging.interceptor)
     implementation(libs.security.crypto)
     testImplementation(libs.junit)
+    testImplementation(libs.arch.core.testing)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.ext.junit)
 }
