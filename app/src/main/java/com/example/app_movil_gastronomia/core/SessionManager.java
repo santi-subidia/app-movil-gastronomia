@@ -30,10 +30,13 @@ public final class SessionManager {
         return _sessionExpired;
     }
 
-    /** Signals that the current session has expired. Posts {@code true}. */
-    @MainThread
+    /**
+     * Signals that the current session has expired.
+     * Uses {@link MutableLiveData#postValue} because it is called from
+     * OkHttp's background thread via {@code AuthInterceptor}.
+     */
     public void expireSession() {
-        _sessionExpired.setValue(true);
+        _sessionExpired.postValue(true);
     }
 
     /** Re-arms the session-expired flag to {@code false} after the consumer handles it. */

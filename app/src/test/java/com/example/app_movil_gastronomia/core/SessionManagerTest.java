@@ -12,6 +12,8 @@ import androidx.lifecycle.Observer;
 import org.junit.Rule;
 import org.junit.Test;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class SessionManagerTest {
@@ -81,5 +83,31 @@ public class SessionManagerTest {
         LiveData<Boolean> first = sessionManager.getSessionExpired();
         LiveData<Boolean> second = sessionManager.getSessionExpired();
         assertTrue("getSessionExpired must return the same instance", first == second);
+    }
+
+    /**
+     * Verifies that expireSession() is thread-safe when called from a
+     * background thread (simulating OkHttp's interceptor thread on 401).
+     * Uses postValue() internally, so the observer fires on the main thread.
+     */
+    @Test
+    public void expireSession_fromBackgroundThread_doesNotCrash() throws Exception {
+        SessionManager sessionManager = new SessionManager();
+        CountDownLatch latch = new CountDownLatch(1);
+        AtomicReference<Boolean> received = new AtomicReference<>();
+
+        sessionManager.getSessionExpired().observeForever(value -> {
+            received.set(value);
+            if (Boolean.TRUE.equals(value)) {
+                latch.countDown();
+            }
+        });
+
+        // Simulate the OkHttp interceptor calling expireSession from a background thread
+        new Thread(() -> sessionManager.expireSession()).start();
+
+        assertTrue("Observer should receive TRUE within 2 seconds",
+                latch.await(2, TimeUnit.SECONDS));
+        assertEquals(Boolean.TRUE, received.get());
     }
 }
