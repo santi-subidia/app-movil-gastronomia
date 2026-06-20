@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.app_movil_gastronomia.BuildConfig;
 import com.example.app_movil_gastronomia.core.AuthInterceptor;
+import com.example.app_movil_gastronomia.core.SessionManager;
 import com.example.app_movil_gastronomia.core.TokenManager;
 import com.example.app_movil_gastronomia.data.api.AuthApi;
 import com.example.app_movil_gastronomia.data.api.ProductoApi;
@@ -46,12 +47,19 @@ public class NetworkModule {
 
     @Provides
     @Singleton
+    public SessionManager provideSessionManager() {
+        return new SessionManager();
+    }
+
+    @Provides
+    @Singleton
     public OkHttpClient provideOkHttpClient(
             TokenManager tokenManager,
+            SessionManager sessionManager,
             HttpLoggingInterceptor loggingInterceptor
     ) {
         return new OkHttpClient.Builder()
-                .addInterceptor(new AuthInterceptor(tokenManager))
+                .addInterceptor(new AuthInterceptor(tokenManager, sessionManager))
                 .addInterceptor(loggingInterceptor)
                 .build();
     }

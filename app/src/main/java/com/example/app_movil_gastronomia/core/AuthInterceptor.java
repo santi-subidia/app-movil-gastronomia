@@ -10,15 +10,21 @@ import okhttp3.Response;
 
 /**
  * OkHttp interceptor that injects the stored JWT as an Authorization Bearer header
- * into every outgoing request. On a 401 response, clears the local session
- * so the app can redirect to login.
+ * into every outgoing request. On a 401 response it clears the local session
+ * AND signals {@link SessionManager#expireSession()} so the host Activity
+ * (the only place with a NavController) can navigate to login.
+ *
+ * <p>Navigation is intentionally NOT performed here: interceptors run on OkHttp
+ * worker threads and have no access to the UI layer.</p>
  */
 public class AuthInterceptor implements Interceptor {
 
     private final TokenManager tokenManager;
+    private final SessionManager sessionManager;
 
-    public AuthInterceptor(TokenManager tokenManager) {
+    public AuthInterceptor(TokenManager tokenManager, SessionManager sessionManager) {
         this.tokenManager = tokenManager;
+        this.sessionManager = sessionManager;
     }
 
     @NonNull
@@ -37,6 +43,7 @@ public class AuthInterceptor implements Interceptor {
 
         if (response.code() == 401) {
             tokenManager.clearToken();
+            sessionManager.expireSession();
         }
 
         return response;
