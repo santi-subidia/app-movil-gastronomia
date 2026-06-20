@@ -39,7 +39,7 @@ public class LoginViewModel extends ViewModel {
             return;
         }
         if (password == null || password.length() < 6) {
-            loginState.setValue(UiState.error("La contrase\u00f1a debe tener al menos 6 caracteres"));
+            loginState.setValue(UiState.error("La contraseña debe tener al menos 6 caracteres"));
             return;
         }
 
