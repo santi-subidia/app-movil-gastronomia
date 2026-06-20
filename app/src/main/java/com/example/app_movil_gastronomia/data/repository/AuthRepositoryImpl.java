@@ -2,6 +2,7 @@ package com.example.app_movil_gastronomia.data.repository;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -11,21 +12,32 @@ import com.example.app_movil_gastronomia.data.api.AuthApi;
 import com.example.app_movil_gastronomia.data.dto.ErrorResponse;
 import com.example.app_movil_gastronomia.data.dto.LoginRequest;
 import com.example.app_movil_gastronomia.data.dto.LoginResponse;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Owns a single {@link MutableLiveData} instance ({@code _loginState}) that
+ * is reset to LOADING on every {@link #login(LoginRequest)} call and then
+ * posted SUCCESS or ERROR. The instance is never reallocated, so observers
+ * registered in the ViewModel constructor (via {@code observeForever}) keep
+ * receiving emissions across retries without leaking.
+ */
+@Singleton
 public class AuthRepositoryImpl implements AuthRepository {
 
     private static final String TAG = "AuthRepositoryImpl";
 
     private final AuthApi authApi;
     private final TokenManager tokenManager;
+    private final MutableLiveData<UiState<LoginResponse>> _loginState = new MutableLiveData<>();
 
     @Inject
     public AuthRepositoryImpl(AuthApi authApi, TokenManager tokenManager) {
@@ -35,23 +47,23 @@ public class AuthRepositoryImpl implements AuthRepository {
 
     @Override
     public LiveData<UiState<LoginResponse>> login(LoginRequest request) {
-        MutableLiveData<UiState<LoginResponse>> result = new MutableLiveData<>();
-        result.setValue(UiState.loading());
+        // Reset the single shared instance to LOADING before the network call.
+        _loginState.setValue(UiState.loading());
 
         authApi.login(request).enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            public void onResponse(@NonNull Call<LoginResponse> call,
+                                   @NonNull Response<LoginResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     LoginResponse body = response.body();
                     tokenManager.saveToken(body.getToken(), body.getRolNombre(), body.getId());
-                    result.setValue(UiState.success(body));
+                    _loginState.setValue(UiState.success(body));
                 } else {
                     String errorMsg = "Error de autenticación";
                     try {
                         if (response.errorBody() != null) {
                             String errorBody = response.errorBody().string();
-                            // Try to parse as ErrorResponse JSON
-                            com.google.gson.Gson gson = new com.google.gson.Gson();
+                            Gson gson = new Gson();
                             ErrorResponse errorResponse = gson.fromJson(errorBody, ErrorResponse.class);
                             if (errorResponse != null && errorResponse.getMensaje() != null) {
                                 errorMsg = errorResponse.getMensaje();
@@ -60,17 +72,22 @@ public class AuthRepositoryImpl implements AuthRepository {
                     } catch (IOException e) {
                         Log.e(TAG, "Error parsing error body", e);
                     }
-                    result.setValue(UiState.error(errorMsg));
+                    _loginState.setValue(UiState.error(errorMsg));
                 }
             }
 
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
                 Log.e(TAG, "Login network failure", t);
-                result.setValue(UiState.error("No hay conexión a internet"));
+                _loginState.setValue(UiState.error("No hay conexión a internet"));
             }
         });
 
-        return result;
+        return getLoginState();
+    }
+
+    @Override
+    public LiveData<UiState<LoginResponse>> getLoginState() {
+        return _loginState;
     }
 }
