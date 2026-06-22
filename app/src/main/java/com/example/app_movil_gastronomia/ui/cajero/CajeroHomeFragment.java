@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,9 +28,10 @@ import dagger.hilt.android.AndroidEntryPoint;
  *   <li><b>Productos</b> → navigates to {@code nav_cajero_productos}
  *       (the new destination that wraps the existing
  *       {@link ProductListFragment}).</li>
- *   <li><b>Caja</b> / <b>Configuración</b> → not yet implemented in
- *       this slice; tapping them shows a transient "Próximamente"
- *       toast so the layout is still discoverable.</li>
+ *   <li><b>Caja</b> → navigates to {@code nav_caja}.</li>
+ *   <li><b>Configuración</b> → navigates to {@code nav_configuracion}
+ *       (the singleton business-configuration form backed by
+ *       {@code ConfiguracionFragment} / {@code ConfiguracionViewModel}).</li>
  * </ul>
  *
  * <p>The two stat streams from {@link CajeroHomeViewModel} are
@@ -84,8 +84,8 @@ public class CajeroHomeFragment extends Fragment {
         binding.buttonPedidos.setOnClickListener(v -> navigateToPedidos());
         binding.buttonProductos.setOnClickListener(v -> navigateToProductos());
         binding.buttonCrearPedido.setOnClickListener(v -> navigateToCrearPedido());
-        binding.buttonCaja.setOnClickListener(v -> showComingSoon());
-        binding.buttonConfig.setOnClickListener(v -> showComingSoon());
+        binding.buttonCaja.setOnClickListener(v -> navigateToCaja());
+        binding.buttonConfig.setOnClickListener(v -> navigateToConfiguracion());
     }
 
     /**
@@ -168,8 +168,14 @@ public class CajeroHomeFragment extends Fragment {
         controller.navigate(R.id.action_nav_cajero_home_to_nav_crear_pedido);
     }
 
-    private void showComingSoon() {
-        Toast.makeText(requireContext(), R.string.coming_soon, Toast.LENGTH_SHORT).show();
+    private void navigateToCaja() {
+        NavController controller = Navigation.findNavController(requireView());
+        controller.navigate(R.id.action_nav_cajero_home_to_nav_caja);
+    }
+
+    private void navigateToConfiguracion() {
+        NavController controller = Navigation.findNavController(requireView());
+        controller.navigate(R.id.action_nav_cajero_home_to_nav_configuracion);
     }
 
     @Override

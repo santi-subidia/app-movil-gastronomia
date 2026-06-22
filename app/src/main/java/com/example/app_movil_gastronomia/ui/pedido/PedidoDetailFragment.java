@@ -16,6 +16,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.app_movil_gastronomia.R;
 import com.example.app_movil_gastronomia.core.UiState;
@@ -65,11 +67,13 @@ public class PedidoDetailFragment extends Fragment {
         binding.buttonCambiarEstado.setOnClickListener(v -> showCambiarEstadoDialog());
         binding.buttonAsignarRepartidor.setOnClickListener(v -> showAsignarRepartidorDialog());
         binding.buttonRegistrarDemora.setOnClickListener(v -> {
-            // TODO: wire DemoraRepository in a follow-up task. Show a
-            // placeholder toast for now so the button is exercisable.
-            Toast.makeText(requireContext(),
-                    R.string.register_delay,
-                    Toast.LENGTH_SHORT).show();
+            // Navigate to the Demora form, passing the current pedidoId
+            // as a SafeArgs-equivalent Bundle argument. The Demora
+            // fragment is responsible for the actual POST.
+            Bundle args = new Bundle();
+            args.putInt("pedidoId", pedidoId);
+            NavController controller = Navigation.findNavController(v);
+            controller.navigate(R.id.action_nav_pedido_detail_to_nav_demora, args);
         });
         binding.buttonRetry.setOnClickListener(v -> viewModel.loadPedido(pedidoId));
 

@@ -53,6 +53,17 @@
     <string name="no_deliveries_assigned">No hay entregas asignadas</string>
     <string name="waiting_assignments">Esperando nuevas asignaciones...</string>
     <string name="delivery_completed">Entrega completada</string>
+    <string name="view_map">Ver Mapa</string>
+
+    <!-- Mapa repartidor -->
+    <string name="mapa_title">Mapa de Entregas</string>
+    <string name="active_deliveries">Entregas Activas</string>
+    <string name="my_location">Mi Ubicación GPS</string>
+    <string name="auto_send_label">Envío automático cada 8s</string>
+    <string name="send_position_now">Enviar Posición Ahora</string>
+    <string name="last_sent">Último envío: %s</string>
+    <string name="waiting_gps">Esperando GPS...</string>
+    <string name="gps_unavailable">GPS no disponible</string>
 
     <!-- Cajero home -->
     <string name="cajero_title">Cajero</string>
@@ -90,4 +101,38 @@
     <string name="option_transfer">Transferencia</string>
     <string name="no_products_in_order">A\u00fan no agregaste productos</string>
     <string name="delete_detalle">Eliminar l\u00ednea</string>
+
+    <!-- Caja open/close screen -->
+    <string name="caja_title">Caja</string>
+    <string name="no_open_caja">No hay caja abierta</string>
+    <string name="open_amount_hint">Monto de Apertura</string>
+    <string name="close_amount_hint">Monto de Cierre Real</string>
+    <string name="open_caja_button">Abrir Caja</string>
+    <string name="close_caja_button">Cerrar Caja</string>
+    <string name="caja_opened">Caja abierta exitosamente</string>
+    <string name="caja_close_success">Caja cerrada exitosamente</string>
+    <string name="caja_label_fecha_apertura">Fecha de apertura: %s</string>
+    <string name="caja_label_monto_apertura">Monto de apertura: $%1$.0f</string>
+    <string name="caja_label_usuario_apertura">Abierta por: %s</string>
+    <string name="validation_amount_required">Ingres\u00e1 un monto v\u00e1lido</string>
+
+    <!-- Demora form -->
+    <string name="demora_title">Registrar Demora</string>
+    <string name="demora_minutes_hint">Minutos de demora</string>
+    <string name="demora_sector_hint">Sector</string>
+    <string name="demora_observations_hint">Observaciones</string>
+    <string name="register_delay_button">Registrar Demora</string>
+    <string name="delay_registered">Demora registrada exitosamente</string>
+    <string name="demora_for_order">Registrar Demora para Pedido #%d</string>
+
+    <!-- Configuracion form (singleton CRUD) -->
+    <string name="config_title">Configuraci\u00f3n</string>
+    <string name="config_saved">Configuraci\u00f3n guardada exitosamente</string>
+    <string name="save_config">Guardar Configuraci\u00f3n</string>
+    <string name="update_config">Actualizar Configuraci\u00f3n</string>
+    <string name="config_nombre_hint">Nombre del gastron\u00f3mico</string>
+    <string name="config_metodo_pago_id_hint">ID m\u00e9todo de pago por defecto</string>
+    <string name="config_metodo_pago_nombre_hint">Nombre m\u00e9todo de pago por defecto</string>
+    <string name="config_latitud_hint">Latitud de partida</string>
+    <string name="config_longitud_hint">Longitud de partida</string>
 </resources>

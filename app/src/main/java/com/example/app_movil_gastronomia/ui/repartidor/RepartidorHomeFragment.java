@@ -72,6 +72,7 @@ public class RepartidorHomeFragment extends Fragment {
         viewModel.getPedidoFinalizado().observe(getViewLifecycleOwner(), this::handlePedidoFinalizado);
 
         binding.buttonRetry.setOnClickListener(v -> viewModel.retry());
+        binding.fabViewMap.setOnClickListener(v -> navigateToMapa());
     }
 
     private void handleState(UiState<List<PedidoResumenDto>> state) {
@@ -167,6 +168,15 @@ public class RepartidorHomeFragment extends Fragment {
         args.putInt("pedidoId", pedido.getId());
         NavController controller = Navigation.findNavController(requireView());
         controller.navigate(R.id.nav_pedido_detail, args);
+    }
+
+    /**
+     * Navigates to the repartidor map screen. Wired to the
+     * "Ver Mapa" extended FAB.
+     */
+    private void navigateToMapa() {
+        NavController controller = Navigation.findNavController(requireView());
+        controller.navigate(R.id.action_nav_repartidor_home_to_nav_mapa);
     }
 
     @Override
