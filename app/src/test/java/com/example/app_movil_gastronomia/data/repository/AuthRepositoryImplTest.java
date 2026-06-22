@@ -8,15 +8,13 @@ import static org.junit.Assert.fail;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
 import com.example.app_movil_gastronomia.core.TokenManager;
 import com.example.app_movil_gastronomia.core.UiState;
 import com.example.app_movil_gastronomia.data.api.AuthApi;
-import com.example.app_movil_gastronomia.data.dto.ErrorResponse;
-import com.example.app_movil_gastronomia.data.dto.LoginRequest;
-import com.example.app_movil_gastronomia.data.dto.LoginResponse;
+import com.example.app_movil_gastronomia.data.dto.auth.LoginRequest;
+import com.example.app_movil_gastronomia.data.dto.auth.LoginResponse;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -25,10 +23,7 @@ import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-import okhttp3.MediaType;
 import okhttp3.Request;
-import okio.BufferedSource;
-import okio.Okio;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

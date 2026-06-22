@@ -1,12 +1,12 @@
-package com.example.app_movil_gastronomia.data.repository;
+package com.example.app_movil_gastronomia.data.repository.contract;
 
 import androidx.lifecycle.LiveData;
 
 import com.example.app_movil_gastronomia.core.UiState;
-import com.example.app_movil_gastronomia.data.dto.CrearPedidoRequest;
-import com.example.app_movil_gastronomia.data.dto.EstadoPedidoEnum;
-import com.example.app_movil_gastronomia.data.dto.PedidoDetalleDto;
-import com.example.app_movil_gastronomia.data.dto.PedidoResumenDto;
+import com.example.app_movil_gastronomia.data.dto.pedido.CrearPedidoRequest;
+import com.example.app_movil_gastronomia.data.dto.pedido.EstadoPedidoEnum;
+import com.example.app_movil_gastronomia.data.dto.pedido.PedidoDetalleDto;
+import com.example.app_movil_gastronomia.data.dto.pedido.PedidoResumenDto;
 
 import java.util.List;
 

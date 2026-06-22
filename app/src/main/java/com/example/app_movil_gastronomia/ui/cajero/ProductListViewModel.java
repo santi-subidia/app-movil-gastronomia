@@ -7,8 +7,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
 import com.example.app_movil_gastronomia.core.UiState;
-import com.example.app_movil_gastronomia.data.dto.ProductoDto;
-import com.example.app_movil_gastronomia.data.repository.ProductoRepository;
+import com.example.app_movil_gastronomia.data.dto.producto.ProductoDto;
+import com.example.app_movil_gastronomia.data.repository.contract.ProductoRepository;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;

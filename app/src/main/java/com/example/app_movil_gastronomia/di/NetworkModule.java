@@ -1,7 +1,5 @@
 package com.example.app_movil_gastronomia.di;
 
-import android.content.Context;
-
 import com.example.app_movil_gastronomia.BuildConfig;
 import com.example.app_movil_gastronomia.core.AuthInterceptor;
 import com.example.app_movil_gastronomia.core.SessionManager;
@@ -20,7 +18,6 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import dagger.hilt.InstallIn;
-import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -95,9 +92,15 @@ public class NetworkModule {
     public ConfiguracionApi provideConfiguracionApi(Retrofit retrofit) {
         return retrofit.create(ConfiguracionApi.class);
     }
-}
+
+    @Provides
+    @Singleton
     public DemoraApi provideDemoraApi(Retrofit retrofit) {
         return retrofit.create(DemoraApi.class);
+    }
+
+    @Provides
+    @Singleton
     public PedidoApi providePedidoApi(Retrofit retrofit) {
         return retrofit.create(PedidoApi.class);
     }

@@ -10,11 +10,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_movil_gastronomia.R;
 import com.example.app_movil_gastronomia.core.UiState;
-import com.example.app_movil_gastronomia.data.dto.ProductoDto;
+import com.example.app_movil_gastronomia.data.dto.producto.ProductoDto;
 import com.example.app_movil_gastronomia.databinding.FragmentProductListBinding;
 
 import java.util.List;

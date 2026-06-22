@@ -8,8 +8,9 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.app_movil_gastronomia.core.UiState;
 import com.example.app_movil_gastronomia.data.api.ConfiguracionApi;
-import com.example.app_movil_gastronomia.data.dto.ConfiguracionDto;
+import com.example.app_movil_gastronomia.data.dto.configuracion.ConfiguracionDto;
 import com.example.app_movil_gastronomia.data.dto.ErrorResponse;
+import com.example.app_movil_gastronomia.data.repository.contract.ConfiguracionRepository;
 import com.google.gson.Gson;
 
 import java.io.IOException;

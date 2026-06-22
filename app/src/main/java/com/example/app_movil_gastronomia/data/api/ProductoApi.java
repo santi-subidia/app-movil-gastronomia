@@ -1,8 +1,8 @@
 package com.example.app_movil_gastronomia.data.api;
 
-import com.example.app_movil_gastronomia.data.dto.ActualizarProductoRequest;
-import com.example.app_movil_gastronomia.data.dto.CrearProductoRequest;
-import com.example.app_movil_gastronomia.data.dto.ProductoDto;
+import com.example.app_movil_gastronomia.data.dto.producto.ActualizarProductoRequest;
+import com.example.app_movil_gastronomia.data.dto.producto.CrearProductoRequest;
+import com.example.app_movil_gastronomia.data.dto.producto.ProductoDto;
 
 import java.util.List;
 

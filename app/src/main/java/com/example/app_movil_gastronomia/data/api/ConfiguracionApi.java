@@ -1,6 +1,6 @@
 package com.example.app_movil_gastronomia.data.api;
 
-import com.example.app_movil_gastronomia.data.dto.ConfiguracionDto;
+import com.example.app_movil_gastronomia.data.dto.configuracion.ConfiguracionDto;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

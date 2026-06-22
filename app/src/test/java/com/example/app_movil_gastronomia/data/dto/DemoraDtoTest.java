@@ -3,6 +3,7 @@ package com.example.app_movil_gastronomia.data.dto;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import com.example.app_movil_gastronomia.data.dto.demora.DemoraDto;
 import com.google.gson.Gson;
 
 import org.junit.Test;

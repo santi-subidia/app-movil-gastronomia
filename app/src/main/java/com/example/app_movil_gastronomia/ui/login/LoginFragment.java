@@ -13,7 +13,7 @@ import androidx.navigation.Navigation;
 
 import com.example.app_movil_gastronomia.R;
 import com.example.app_movil_gastronomia.core.UiState;
-import com.example.app_movil_gastronomia.data.dto.LoginResponse;
+import com.example.app_movil_gastronomia.data.dto.auth.LoginResponse;
 import com.example.app_movil_gastronomia.databinding.FragmentLoginBinding;
 
 import dagger.hilt.android.AndroidEntryPoint;

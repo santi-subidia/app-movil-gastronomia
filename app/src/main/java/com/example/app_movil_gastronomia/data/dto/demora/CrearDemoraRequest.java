@@ -1,26 +1,24 @@
-package com.example.app_movil_gastronomia.data.dto;
+package com.example.app_movil_gastronomia.data.dto.demora;
 
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Response body for {@code GET/POST/PUT /api/demoras}.
+ * Request body for {@code POST /api/demoras}.
  *
  * <p>Spec DEM-DTO-001: serialized JSON must contain exactly the keys
- * {@code id}, {@code pedidoId}, {@code usuarioId}, {@code demoraMinutos},
- * {@code sector}, {@code observaciones} — matching the server's contract.
- * All fields are primitives or {@code String} (no boxing required because
- * a {@code DemoraDto} is always returned fully populated by the server).
+ * {@code pedidoId}, {@code demoraMinutos}, {@code sector},
+ * {@code observaciones} — matching the server's contract. All four
+ * fields are required by the server, so they are kept as primitives
+ * or {@code String}.
+ *
+ * <p>{@code usuarioId} is intentionally absent: the server derives the
+ * caller from the auth token (see design decision in
+ * {@code sdd/entidad-demoras/design}).
  */
-public class DemoraDto {
-
-    @SerializedName("id")
-    private int id;
+public class CrearDemoraRequest {
 
     @SerializedName("pedidoId")
     private int pedidoId;
-
-    @SerializedName("usuarioId")
-    private int usuarioId;
 
     @SerializedName("demoraMinutos")
     private int demoraMinutos;
@@ -31,12 +29,11 @@ public class DemoraDto {
     @SerializedName("observaciones")
     private String observaciones;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public CrearDemoraRequest(int pedidoId, int demoraMinutos, String sector, String observaciones) {
+        this.pedidoId = pedidoId;
+        this.demoraMinutos = demoraMinutos;
+        this.sector = sector;
+        this.observaciones = observaciones;
     }
 
     public int getPedidoId() {
@@ -45,14 +42,6 @@ public class DemoraDto {
 
     public void setPedidoId(int pedidoId) {
         this.pedidoId = pedidoId;
-    }
-
-    public int getUsuarioId() {
-        return usuarioId;
-    }
-
-    public void setUsuarioId(int usuarioId) {
-        this.usuarioId = usuarioId;
     }
 
     public int getDemoraMinutos() {

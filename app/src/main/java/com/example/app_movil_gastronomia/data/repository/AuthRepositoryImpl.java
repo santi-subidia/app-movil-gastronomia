@@ -10,8 +10,9 @@ import com.example.app_movil_gastronomia.core.TokenManager;
 import com.example.app_movil_gastronomia.core.UiState;
 import com.example.app_movil_gastronomia.data.api.AuthApi;
 import com.example.app_movil_gastronomia.data.dto.ErrorResponse;
-import com.example.app_movil_gastronomia.data.dto.LoginRequest;
-import com.example.app_movil_gastronomia.data.dto.LoginResponse;
+import com.example.app_movil_gastronomia.data.dto.auth.LoginRequest;
+import com.example.app_movil_gastronomia.data.dto.auth.LoginResponse;
+import com.example.app_movil_gastronomia.data.repository.contract.AuthRepository;
 import com.google.gson.Gson;
 
 import java.io.IOException;

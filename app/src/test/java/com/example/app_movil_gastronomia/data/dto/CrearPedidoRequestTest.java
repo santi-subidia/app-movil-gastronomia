@@ -5,6 +5,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import com.example.app_movil_gastronomia.data.dto.pedido.CrearDetalleRequest;
+import com.example.app_movil_gastronomia.data.dto.pedido.CrearPedidoRequest;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;

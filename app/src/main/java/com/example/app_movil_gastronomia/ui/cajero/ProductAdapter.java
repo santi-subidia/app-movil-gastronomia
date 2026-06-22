@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_movil_gastronomia.R;
-import com.example.app_movil_gastronomia.data.dto.ProductoDto;
+import com.example.app_movil_gastronomia.data.dto.producto.ProductoDto;
 
 import java.util.ArrayList;
 import java.util.List;

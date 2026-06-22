@@ -1,9 +1,9 @@
-package com.example.app_movil_gastronomia.data.repository;
+package com.example.app_movil_gastronomia.data.repository.contract;
 
 import androidx.lifecycle.LiveData;
 
 import com.example.app_movil_gastronomia.core.UiState;
-import com.example.app_movil_gastronomia.data.dto.ConfiguracionDto;
+import com.example.app_movil_gastronomia.data.dto.configuracion.ConfiguracionDto;
 
 /**
  * Configuracion REST data-layer contract.

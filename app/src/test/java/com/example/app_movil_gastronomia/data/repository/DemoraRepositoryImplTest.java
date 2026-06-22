@@ -13,9 +13,9 @@ import androidx.lifecycle.Observer;
 
 import com.example.app_movil_gastronomia.core.UiState;
 import com.example.app_movil_gastronomia.data.api.DemoraApi;
-import com.example.app_movil_gastronomia.data.dto.ActualizarDemoraRequest;
-import com.example.app_movil_gastronomia.data.dto.CrearDemoraRequest;
-import com.example.app_movil_gastronomia.data.dto.DemoraDto;
+import com.example.app_movil_gastronomia.data.dto.demora.ActualizarDemoraRequest;
+import com.example.app_movil_gastronomia.data.dto.demora.CrearDemoraRequest;
+import com.example.app_movil_gastronomia.data.dto.demora.DemoraDto;
 
 import org.junit.Rule;
 import org.junit.Test;

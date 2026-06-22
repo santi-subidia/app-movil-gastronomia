@@ -12,9 +12,9 @@ import androidx.lifecycle.Observer;
 
 import com.example.app_movil_gastronomia.core.UiState;
 import com.example.app_movil_gastronomia.data.api.ProductoApi;
-import com.example.app_movil_gastronomia.data.dto.ActualizarProductoRequest;
-import com.example.app_movil_gastronomia.data.dto.CrearProductoRequest;
-import com.example.app_movil_gastronomia.data.dto.ProductoDto;
+import com.example.app_movil_gastronomia.data.dto.producto.ActualizarProductoRequest;
+import com.example.app_movil_gastronomia.data.dto.producto.CrearProductoRequest;
+import com.example.app_movil_gastronomia.data.dto.producto.ProductoDto;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -22,11 +22,9 @@ import org.junit.Test;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 import okhttp3.MediaType;
-import okhttp3.Protocol;
 import okhttp3.Request;
 import okhttp3.ResponseBody;
 import okio.BufferedSource;

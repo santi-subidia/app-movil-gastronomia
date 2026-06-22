@@ -3,6 +3,7 @@ package com.example.app_movil_gastronomia.data.dto;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import com.example.app_movil_gastronomia.data.dto.pedido.EstadoPedidoEnum;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 

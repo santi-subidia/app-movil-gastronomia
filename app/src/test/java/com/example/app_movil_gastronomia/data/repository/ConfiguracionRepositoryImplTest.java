@@ -12,7 +12,7 @@ import androidx.lifecycle.Observer;
 
 import com.example.app_movil_gastronomia.core.UiState;
 import com.example.app_movil_gastronomia.data.api.ConfiguracionApi;
-import com.example.app_movil_gastronomia.data.dto.ConfiguracionDto;
+import com.example.app_movil_gastronomia.data.dto.configuracion.ConfiguracionDto;
 
 import org.junit.Rule;
 import org.junit.Test;

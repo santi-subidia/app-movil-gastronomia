@@ -7,9 +7,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
 import com.example.app_movil_gastronomia.core.UiState;
-import com.example.app_movil_gastronomia.data.dto.LoginRequest;
-import com.example.app_movil_gastronomia.data.dto.LoginResponse;
-import com.example.app_movil_gastronomia.data.repository.AuthRepository;
+import com.example.app_movil_gastronomia.data.dto.auth.LoginRequest;
+import com.example.app_movil_gastronomia.data.dto.auth.LoginResponse;
+import com.example.app_movil_gastronomia.data.repository.contract.AuthRepository;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

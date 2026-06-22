@@ -8,10 +8,11 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.app_movil_gastronomia.core.UiState;
 import com.example.app_movil_gastronomia.data.api.DemoraApi;
-import com.example.app_movil_gastronomia.data.dto.ActualizarDemoraRequest;
-import com.example.app_movil_gastronomia.data.dto.CrearDemoraRequest;
-import com.example.app_movil_gastronomia.data.dto.DemoraDto;
+import com.example.app_movil_gastronomia.data.dto.demora.ActualizarDemoraRequest;
+import com.example.app_movil_gastronomia.data.dto.demora.CrearDemoraRequest;
+import com.example.app_movil_gastronomia.data.dto.demora.DemoraDto;
 import com.example.app_movil_gastronomia.data.dto.ErrorResponse;
+import com.example.app_movil_gastronomia.data.repository.contract.DemoraRepository;
 import com.google.gson.Gson;
 
 import java.io.IOException;

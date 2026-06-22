@@ -1,8 +1,8 @@
 package com.example.app_movil_gastronomia.data.api;
 
-import com.example.app_movil_gastronomia.data.dto.AbrirCajaRequest;
-import com.example.app_movil_gastronomia.data.dto.CajaDto;
-import com.example.app_movil_gastronomia.data.dto.CerrarCajaRequest;
+import com.example.app_movil_gastronomia.data.dto.caja.AbrirCajaRequest;
+import com.example.app_movil_gastronomia.data.dto.caja.CajaDto;
+import com.example.app_movil_gastronomia.data.dto.caja.CerrarCajaRequest;
 
 import java.util.List;
 

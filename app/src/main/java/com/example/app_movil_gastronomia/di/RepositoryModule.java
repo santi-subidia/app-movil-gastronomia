@@ -1,17 +1,7 @@
 package com.example.app_movil_gastronomia.di;
 
-import com.example.app_movil_gastronomia.data.repository.AuthRepository;
-import com.example.app_movil_gastronomia.data.repository.AuthRepositoryImpl;
-import com.example.app_movil_gastronomia.data.repository.ConfiguracionRepository;
-import com.example.app_movil_gastronomia.data.repository.ConfiguracionRepositoryImpl;
-import com.example.app_movil_gastronomia.data.repository.DemoraRepository;
-import com.example.app_movil_gastronomia.data.repository.DemoraRepositoryImpl;
-import com.example.app_movil_gastronomia.data.repository.CajaRepository;
-import com.example.app_movil_gastronomia.data.repository.CajaRepositoryImpl;
-import com.example.app_movil_gastronomia.data.repository.PedidoRepository;
-import com.example.app_movil_gastronomia.data.repository.PedidoRepositoryImpl;
-import com.example.app_movil_gastronomia.data.repository.ProductoRepository;
-import com.example.app_movil_gastronomia.data.repository.ProductoRepositoryImpl;
+import com.example.app_movil_gastronomia.data.repository.contract.*;
+import com.example.app_movil_gastronomia.data.repository.*;
 
 import dagger.Binds;
 import dagger.Module;
@@ -30,8 +20,11 @@ public abstract class RepositoryModule {
 
     @Binds
     public abstract ConfiguracionRepository bindConfiguracionRepository(ConfiguracionRepositoryImpl impl);
-}
+
+    @Binds
     public abstract DemoraRepository bindDemoraRepository(DemoraRepositoryImpl impl);
+
+    @Binds
     public abstract PedidoRepository bindPedidoRepository(PedidoRepositoryImpl impl);
 
     @Binds

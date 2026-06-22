@@ -12,13 +12,13 @@ import androidx.lifecycle.Observer;
 
 import com.example.app_movil_gastronomia.core.UiState;
 import com.example.app_movil_gastronomia.data.api.PedidoApi;
-import com.example.app_movil_gastronomia.data.dto.AsignarRepartidorRequest;
-import com.example.app_movil_gastronomia.data.dto.CambiarEstadoRequest;
-import com.example.app_movil_gastronomia.data.dto.CrearDetalleRequest;
-import com.example.app_movil_gastronomia.data.dto.CrearPedidoRequest;
-import com.example.app_movil_gastronomia.data.dto.EstadoPedidoEnum;
-import com.example.app_movil_gastronomia.data.dto.PedidoDetalleDto;
-import com.example.app_movil_gastronomia.data.dto.PedidoResumenDto;
+import com.example.app_movil_gastronomia.data.dto.pedido.AsignarRepartidorRequest;
+import com.example.app_movil_gastronomia.data.dto.pedido.CambiarEstadoRequest;
+import com.example.app_movil_gastronomia.data.dto.pedido.CrearDetalleRequest;
+import com.example.app_movil_gastronomia.data.dto.pedido.CrearPedidoRequest;
+import com.example.app_movil_gastronomia.data.dto.pedido.EstadoPedidoEnum;
+import com.example.app_movil_gastronomia.data.dto.pedido.PedidoDetalleDto;
+import com.example.app_movil_gastronomia.data.dto.pedido.PedidoResumenDto;
 
 import org.junit.Rule;
 import org.junit.Test;

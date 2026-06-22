@@ -1,4 +1,4 @@
-package com.example.app_movil_gastronomia.data.dto;
+package com.example.app_movil_gastronomia.data.dto.demora;
 
 import com.google.gson.annotations.SerializedName;
 

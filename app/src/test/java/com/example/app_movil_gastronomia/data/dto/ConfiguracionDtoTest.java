@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import com.example.app_movil_gastronomia.data.dto.configuracion.ConfiguracionDto;
 import com.google.gson.Gson;
 
 import org.junit.Test;

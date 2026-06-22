@@ -1,10 +1,11 @@
 package com.example.app_movil_gastronomia.data.api;
 
-import com.example.app_movil_gastronomia.data.dto.AsignarRepartidorRequest;
-import com.example.app_movil_gastronomia.data.dto.CambiarEstadoRequest;
-import com.example.app_movil_gastronomia.data.dto.CrearPedidoRequest;
-import com.example.app_movil_gastronomia.data.dto.PedidoDetalleDto;
-import com.example.app_movil_gastronomia.data.dto.PedidoResumenDto;
+import com.example.app_movil_gastronomia.data.dto.pedido.AsignarRepartidorRequest;
+import com.example.app_movil_gastronomia.data.dto.pedido.CambiarEstadoRequest;
+import com.example.app_movil_gastronomia.data.dto.pedido.CrearPedidoRequest;
+import com.example.app_movil_gastronomia.data.dto.pedido.PedidoDetalleDto;
+import com.example.app_movil_gastronomia.data.dto.pedido.PedidoResumenDto;
+import com.example.app_movil_gastronomia.data.dto.pedido.EstadoPedidoEnum;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ import retrofit2.http.Path;
  * <p>Spec PED-API-001: 6 endpoints, all paths relative to the Retrofit
  * {@code baseUrl} (e.g. {@code https://api.example.com/}). Path values
  * match the backend contract 1:1; the {@code estado} path variable is
- * resolved from {@link com.example.app_movil_gastronomia.data.dto.EstadoPedidoEnum#getApiValue()}
+ * resolved from {@link EstadoPedidoEnum#getApiValue()}
  * at the repository layer so the enum never leaks into Retrofit.</p>
  */
 public interface PedidoApi {

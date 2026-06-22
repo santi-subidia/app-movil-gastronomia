@@ -1,11 +1,11 @@
-package com.example.app_movil_gastronomia.data.repository;
+package com.example.app_movil_gastronomia.data.repository.contract;
 
 import androidx.lifecycle.LiveData;
 
 import com.example.app_movil_gastronomia.core.UiState;
-import com.example.app_movil_gastronomia.data.dto.ActualizarDemoraRequest;
-import com.example.app_movil_gastronomia.data.dto.CrearDemoraRequest;
-import com.example.app_movil_gastronomia.data.dto.DemoraDto;
+import com.example.app_movil_gastronomia.data.dto.demora.ActualizarDemoraRequest;
+import com.example.app_movil_gastronomia.data.dto.demora.CrearDemoraRequest;
+import com.example.app_movil_gastronomia.data.dto.demora.DemoraDto;
 
 import java.util.List;
 
