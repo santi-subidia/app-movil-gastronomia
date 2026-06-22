@@ -42,4 +42,15 @@
     <string name="action_confirm">Confirmar</string>
     <string name="action_cancel">Cancelar</string>
     <string name="driver_id_hint">ID del Repartidor</string>
+
+    <!-- Cocina home -->
+    <string name="cocina_title">Cocina</string>
+    <string name="no_pending_orders">No hay pedidos pendientes</string>
+    <string name="all_orders_attended">Todos los clientes est\u00e1n siendo atendidos. \u00a1Buen trabajo!</string>
+
+    <!-- Repartidor home -->
+    <string name="repartidor_title">Repartidor</string>
+    <string name="no_deliveries_assigned">No hay entregas asignadas</string>
+    <string name="waiting_assignments">Esperando nuevas asignaciones...</string>
+    <string name="delivery_completed">Entrega completada</string>
 </resources>
