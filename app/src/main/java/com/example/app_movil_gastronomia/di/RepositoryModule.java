@@ -4,6 +4,10 @@ import com.example.app_movil_gastronomia.data.repository.AuthRepository;
 import com.example.app_movil_gastronomia.data.repository.AuthRepositoryImpl;
 import com.example.app_movil_gastronomia.data.repository.DemoraRepository;
 import com.example.app_movil_gastronomia.data.repository.DemoraRepositoryImpl;
+import com.example.app_movil_gastronomia.data.repository.CajaRepository;
+import com.example.app_movil_gastronomia.data.repository.CajaRepositoryImpl;
+import com.example.app_movil_gastronomia.data.repository.PedidoRepository;
+import com.example.app_movil_gastronomia.data.repository.PedidoRepositoryImpl;
 import com.example.app_movil_gastronomia.data.repository.ProductoRepository;
 import com.example.app_movil_gastronomia.data.repository.ProductoRepositoryImpl;
 
@@ -24,4 +28,8 @@ public abstract class RepositoryModule {
 
     @Binds
     public abstract DemoraRepository bindDemoraRepository(DemoraRepositoryImpl impl);
+    public abstract PedidoRepository bindPedidoRepository(PedidoRepositoryImpl impl);
+
+    @Binds
+    public abstract CajaRepository bindCajaRepository(CajaRepositoryImpl impl);
 }
