@@ -33,10 +33,37 @@
     <fragment
         android:id="@+id/nav_cocina_home"
         android:name="com.example.app_movil_gastronomia.ui.cocina.CocinaHomeFragment"
-        android:label="Cocina" />
+        android:label="Cocina">
+        <action
+            android:id="@+id/action_nav_cocina_home_to_nav_pedido_list"
+            app:destination="@id/nav_pedido_list" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_repartidor_home"
         android:name="com.example.app_movil_gastronomia.ui.repartidor.RepartidorHomeFragment"
-        android:label="Repartidor" />
+        android:label="Repartidor">
+        <action
+            android:id="@+id/action_nav_repartidor_home_to_nav_pedido_list"
+            app:destination="@id/nav_pedido_list" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_pedido_list"
+        android:name="com.example.app_movil_gastronomia.ui.pedido.PedidoListFragment"
+        android:label="Pedidos">
+        <action
+            android:id="@+id/action_nav_pedido_list_to_nav_pedido_detail"
+            app:destination="@id/nav_pedido_detail" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_pedido_detail"
+        android:name="com.example.app_movil_gastronomia.ui.pedido.PedidoDetailFragment"
+        android:label="Detalle de Pedido">
+        <argument
+            android:name="pedidoId"
+            app:argType="integer" />
+    </fragment>
+
 </navigation>

@@ -20,4 +20,26 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
+
+    <!-- Pedido list / detail -->
+    <string name="all_orders">Todos</string>
+    <string name="status_pending">Pendiente</string>
+    <string name="status_preparing">En Preparaci\u00f3n</string>
+    <string name="status_ready">Listo</string>
+    <string name="status_delivering">En Camino</string>
+    <string name="status_delivered">Entregado</string>
+    <string name="no_orders">No hay pedidos</string>
+    <string name="no_orders_state">No hay pedidos %s</string>
+    <string name="order_detail_title">Pedido #%d</string>
+    <string name="change_status">Cambiar Estado</string>
+    <string name="assign_driver">Asignar Repartidor</string>
+    <string name="register_delay">Registrar Demora</string>
+    <string name="label_customer">Cliente</string>
+    <string name="label_method">M\u00e9todo</string>
+    <string name="label_date">Fecha</string>
+    <string name="label_total">Total</string>
+    <string name="label_items">Productos</string>
+    <string name="action_confirm">Confirmar</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="driver_id_hint">ID del Repartidor</string>
 </resources>
