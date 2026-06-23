@@ -19,6 +19,7 @@ okhttp = "4.12.0"
 gson = "2.11.0"
 securityCrypto = "1.1.0"
 signalr = "8.0.0"
+orgJson = "20231013"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -42,6 +43,7 @@ okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhtt
 logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 security-crypto = { group = "androidx.security", name = "security-crypto", version.ref = "securityCrypto" }
 signalr = { group = "com.microsoft.signalr", name = "signalr", version.ref = "signalr" }
+org-json = { group = "org.json", name = "json", version.ref = "orgJson" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

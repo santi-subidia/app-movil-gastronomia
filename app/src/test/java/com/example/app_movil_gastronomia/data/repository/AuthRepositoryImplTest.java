@@ -188,10 +188,12 @@ public class AuthRepositoryImplTest {
     }
 
     static final class NoopTokenManager implements TokenManager {
-        @Override public void saveToken(String token, String rolNombre, int userId) { }
+        @Override public void saveToken(String token, String rolNombre, int userId, String nombreUsuario) { }
         @Override public String getToken() { return null; }
         @Override public String getRole() { return null; }
         @Override public int getUserId() { return -1; }
+        @Override public String getNombreUsuario() { return null; }
+        @Override public long decodeTokenExp() { return -1L; }
         @Override public boolean hasToken() { return false; }
         @Override public void clearToken() { }
     }

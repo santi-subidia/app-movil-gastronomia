@@ -63,6 +63,7 @@ dependencies {
     implementation(libs.signalr)
     testImplementation(libs.junit)
     testImplementation(libs.arch.core.testing)
+    testImplementation(libs.org.json)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.hilt.android.testing)

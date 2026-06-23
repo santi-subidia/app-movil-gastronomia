@@ -57,7 +57,12 @@ public class AuthRepositoryImpl implements AuthRepository {
                                    @NonNull Response<LoginResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     LoginResponse body = response.body();
-                    tokenManager.saveToken(body.getToken(), body.getRolNombre(), body.getId());
+                    tokenManager.saveToken(
+                            body.getToken(),
+                            body.getRolNombre(),
+                            body.getId(),
+                            body.getUsuarioNombre()
+                    );
                     _loginState.setValue(UiState.success(body));
                 } else {
                     String errorMsg = "Error de autenticación";
