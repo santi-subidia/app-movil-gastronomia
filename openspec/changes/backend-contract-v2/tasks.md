@@ -40,19 +40,19 @@ Chain strategy: stacked-to-main
 
 ## PR2: DTO Cleanup + SignalR Rename (MODIFY / DELETE)
 
-- [ ] 2.1–2.3 Remove `sector` from `CrearDemoraRequest`, `ActualizarDemoraRequest`, `DemoraDto`
-- [ ] 2.4 Remove `usuarioAperturaId` from `AbrirCajaRequest`; constructor takes `montoApertura`
-- [ ] 2.5 Remove `usuarioCierreId` from `CerrarCajaRequest`; constructor takes 2 doubles
-- [ ] 2.6 Remove `usuarioAperturaId`/`usuarioCierreId` from `CajaDto`
-- [ ] 2.7 Delete `CambiarEstadoRequest.java`; scrub all imports
-- [ ] 2.8 Update `PedidoApi.cambiarEstado()` to `@Body int nuevoEstadoId`
-- [ ] 2.9 Rename `PosicionGPSMessage` → `PosicionGPSActualizadaMessage`
-- [ ] 2.10 Rename `getPosicionGPS()` → `getPosicionGPSActualizada()` in `SignalRService`
-- [ ] 2.11 Update `SignalRServiceImpl`: field, handler `"PosicionGPS"` → `"PosicionGPSActualizada"`
-- [ ] 2.12 Update `MapaViewModel` — use renamed getter, import new message class
-- [ ] 2.13 Remove `tokenManager.getUserId()` from `CajaViewModel.abrirCaja()`/`cerrarCaja()`
-- [ ] 2.14 Delete `CambiarEstadoRequestTest.java`
-- [ ] 2.15 Update `AbrirCajaRequestTest`, `CerrarCajaRequestTest`, `CajaDtoTest` — drop ID assertions
+- [x] 2.1–2.3 Remove `sector` from `CrearDemoraRequest`, `ActualizarDemoraRequest`, `DemoraDto`
+- [x] 2.4 Remove `usuarioAperturaId` from `AbrirCajaRequest`; constructor takes `montoApertura`
+- [x] 2.5 Remove `usuarioCierreId` from `CerrarCajaRequest`; constructor takes 2 doubles
+- [x] 2.6 Remove `usuarioAperturaId`/`usuarioCierreId` from `CajaDto`
+- [x] 2.7 Delete `CambiarEstadoRequest.java`; scrub all imports
+- [x] 2.8 Update `PedidoApi.cambiarEstado()` to `@Body int nuevoEstadoId`
+- [x] 2.9 Rename `PosicionGPSMessage` → `PosicionGPSActualizadaMessage`
+- [x] 2.10 Rename `getPosicionGPS()` → `getPosicionGPSActualizada()` in `SignalRService`
+- [x] 2.11 Update `SignalRServiceImpl`: field, handler `"PosicionGPS"` → `"PosicionGPSActualizada"`
+- [x] 2.12 Update `MapaViewModel` — use renamed getter, import new message class
+- [x] 2.13 Remove `tokenManager.getUserId()` from `CajaViewModel.abrirCaja()`/`cerrarCaja()`
+- [x] 2.14 Delete `CambiarEstadoRequestTest.java`
+- [x] 2.15 Update `AbrirCajaRequestTest`, `CerrarCajaRequestTest`, `CajaDtoTest` — drop ID assertions
 
 ## PR3: CrearPedido UI Refactor (CREATE / MODIFY)
 
