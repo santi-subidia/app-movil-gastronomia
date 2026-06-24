@@ -64,9 +64,9 @@ Chain strategy: stacked-to-main
 
 ## PR4: Estado Body + Cajas Abiertas (MODIFY)
 
-- [ ] 4.1 Inject `CatalogoRepository` into `PedidoRepositoryImpl`; resolve via `resolveEstadoId()`, send `@Body int`
-- [ ] 4.2 Add `@GET("api/cajas/abiertas")` to `CajaApi`
-- [ ] 4.3 Add `getCajasAbiertas()` + `getCajasAbiertasState()` to `CajaRepository`
-- [ ] 4.4 Implement `getCajasAbiertas()` in `CajaRepositoryImpl` with LOADING/SUCCESS/ERROR
-- [ ] 4.5 Update `PedidoRepositoryImplTest` — mock uses `int` body, add catalog mock
-- [ ] 4.6 Write `CajaRepositoryImplTest` for `getCajasAbiertas` states
+- [x] 4.1 Inject `CatalogoRepository` into `PedidoRepositoryImpl`; resolve via `resolveEstadoId()`, send `@Body int`
+- [x] 4.2 Add `@GET("api/cajas/abiertas")` to `CajaApi`
+- [x] 4.3 Add `getCajasAbiertas()` + `getCajasAbiertasState()` to `CajaRepository`
+- [x] 4.4 Implement `getCajasAbiertas()` in `CajaRepositoryImpl` with LOADING/SUCCESS/ERROR
+- [x] 4.5 Update `PedidoRepositoryImplTest` — mock uses `int` body, add catalog mock, add test for unknown estado → error
+- [x] 4.6 Write `CajaRepositoryImplTest` for `getCajasAbiertas` states
