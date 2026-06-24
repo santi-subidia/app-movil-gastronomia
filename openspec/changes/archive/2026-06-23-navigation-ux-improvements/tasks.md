@@ -34,15 +34,15 @@ Chain strategy: pending
 ## Phase 2: XML Resources
 
 - [x] 2.1 **activity_main.xml** — Add `NavigationView` inside `DrawerLayout`; add splash `LinearLayout` as sibling to `DrawerLayout` with `android:visibility="gone"`
-- [ ] 2.2 **layout-w1240dp/activity_main.xml** — Wrap content in `DrawerLayout`; add `NavigationView` child; add splash layout
-- [ ] 2.3 **app_bar_main.xml** — Remove FAB block (CoordinatorLayout + FloatingActionButton)
-- [ ] 2.4 **nav_header_main.xml** — Add `android:id="@+id/header_name"` to title `TextView`; add `android:id="@+id/header_role"` to subtitle `TextView`
-- [ ] 2.5 **bottom_navigation.xml** — Add placeholder `<group>` items; items populated programmatically per role
-- [ ] 2.6 **navigation_drawer.xml** — Add `<item android:id="@+id/nav_configuracion"` and `<item android:id="@+id/nav_cerrar_sesion"`
-- [ ] 2.7 **main_options_menu.xml** — Create: single `action_logout` item with `showAsAction="never"`
-- [ ] 2.8 **overflow.xml** — Delete (replaced by `main_options_menu.xml`)
-- [ ] 2.9 **drawable/ic_home_24dp.xml**, **ic_pedidos_24dp.xml**, **ic_productos_24dp.xml**, **ic_caja_24dp.xml**, **ic_mapa_24dp.xml** — Create Material vector drawables
-- [ ] 2.10 **strings.xml** — Add: `drawer_config`, `drawer_logout`, `menu_logout`, `splash_title`, `role_cajero`, `role_cocina`, `role_repartidor`, `header_fallback`
+- [x] 2.2 **layout-w1240dp/activity_main.xml** — Wrap content in `DrawerLayout`; add `NavigationView` child; add splash layout
+- [x] 2.3 **app_bar_main.xml** — Remove FAB block (CoordinatorLayout + FloatingActionButton)
+- [x] 2.4 **nav_header_main.xml** — Add `android:id="@+id/header_name"` to title `TextView`; add `android:id="@+id/header_role"` to subtitle `TextView`
+- [x] 2.5 **bottom_navigation.xml** — Add placeholder `<group>` items; items populated programmatically per role
+- [x] 2.6 **navigation_drawer.xml** — Add `<item android:id="@+id/nav_configuracion"` and `<item android:id="@+id/nav_cerrar_sesion"`
+- [x] 2.7 **main_options_menu.xml** — Create: single `action_logout` item with `showAsAction="never"`
+- [x] 2.8 **overflow.xml** — Delete (replaced by `main_options_menu.xml`)
+- [x] 2.9 **drawable/ic_home_24dp.xml**, **ic_pedidos_24dp.xml**, **ic_productos_24dp.xml**, **ic_caja_24dp.xml**, **ic_mapa_24dp.xml** — Create Material vector drawables
+- [x] 2.10 **strings.xml** — Add: `drawer_config`, `drawer_logout`, `menu_logout`, `splash_title`, `role_cajero`, `role_cocina`, `role_repartidor`, `header_fallback`
 
 ## Phase 3: MainActivity Wiring
 
