@@ -29,4 +29,7 @@ public abstract class RepositoryModule {
 
     @Binds
     public abstract CajaRepository bindCajaRepository(CajaRepositoryImpl impl);
+
+    @Binds
+    public abstract CatalogoRepository bindCatalogoRepository(CatalogoRepositoryImpl impl);
 }
