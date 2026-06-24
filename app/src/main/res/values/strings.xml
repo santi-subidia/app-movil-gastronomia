@@ -135,4 +135,14 @@
     <string name="config_metodo_pago_nombre_hint">Nombre m\u00e9todo de pago por defecto</string>
     <string name="config_latitud_hint">Latitud de partida</string>
     <string name="config_longitud_hint">Longitud de partida</string>
+
+    <!-- Navigation UX: drawer, toolbar overflow, splash, role labels, header fallback -->
+    <string name="drawer_config">Configuraci\u00f3n</string>
+    <string name="drawer_logout">Cerrar sesi\u00f3n</string>
+    <string name="menu_logout">Cerrar sesi\u00f3n</string>
+    <string name="splash_title">Gastronom\u00eda</string>
+    <string name="role_cajero">Cajero</string>
+    <string name="role_cocina">Cocina</string>
+    <string name="role_repartidor">Repartidor</string>
+    <string name="header_fallback">Usuario</string>
 </resources>
