@@ -27,7 +27,7 @@ import retrofit2.Response;
 
 /**
  * Owns a single {@link MutableLiveData} instance per method — one for
- * each of the 4 repository methods. Every instance is reset to LOADING
+ * each of the 5 repository methods. Every instance is reset to LOADING
  * on its method call and then posted SUCCESS or ERROR. Instances are
  * never reallocated, so observers registered in the ViewModel
  * constructor (via {@code observeForever}) keep receiving emissions
@@ -47,6 +47,7 @@ public class CajaRepositoryImpl implements CajaRepository {
     private final CajaApi cajaApi;
 
     private final MutableLiveData<UiState<List<CajaDto>>> _cajasState = new MutableLiveData<>();
+    private final MutableLiveData<UiState<List<CajaDto>>> _cajasAbiertasState = new MutableLiveData<>();
     private final MutableLiveData<UiState<CajaDto>> _cajaState = new MutableLiveData<>();
     private final MutableLiveData<UiState<CajaDto>> _abrirState = new MutableLiveData<>();
     private final MutableLiveData<UiState<CajaDto>> _cerrarState = new MutableLiveData<>();
@@ -92,6 +93,45 @@ public class CajaRepositoryImpl implements CajaRepository {
     @Override
     public LiveData<UiState<List<CajaDto>>> getCajasState() {
         return _cajasState;
+    }
+
+    // ------------------------------------------------------------------
+    // getCajasAbiertas()
+    // ------------------------------------------------------------------
+
+    @Override
+    public LiveData<UiState<List<CajaDto>>> getCajasAbiertas() {
+        // Spec CAJ-ABIERTAS-001: dedicated endpoint, no query params.
+        // The server returns 200 with an empty list when no caja is
+        // open — we treat that as SUCCESS, not ERROR, so the UI can
+        // render "no hay cajas abiertas" cleanly.
+        _cajasAbiertasState.setValue(UiState.loading());
+
+        cajaApi.getCajasAbiertas().enqueue(new Callback<List<CajaDto>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<CajaDto>> call,
+                                   @NonNull Response<List<CajaDto>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    _cajasAbiertasState.setValue(UiState.success(response.body()));
+                } else {
+                    _cajasAbiertasState.setValue(UiState.error(
+                            parseMensaje(response, "Error del servidor, intente más tarde")));
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<CajaDto>> call, @NonNull Throwable t) {
+                Log.e(TAG, "GetCajasAbiertas network failure", t);
+                _cajasAbiertasState.setValue(UiState.error("No hay conexión a internet"));
+            }
+        });
+
+        return getCajasAbiertasState();
+    }
+
+    @Override
+    public LiveData<UiState<List<CajaDto>>> getCajasAbiertasState() {
+        return _cajasAbiertasState;
     }
 
     // ------------------------------------------------------------------

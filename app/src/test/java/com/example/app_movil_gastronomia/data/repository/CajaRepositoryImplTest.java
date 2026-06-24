@@ -40,6 +40,11 @@ import retrofit2.Response;
  *  - CAJ-LIST-004:  getCajasState returns the same instance across calls
  *  - CAJ-LIST-005:  getCajas passes estado=null through to the API call
  *  - CAJ-LIST-006:  getCajas passes estado="Abierta" through to the API call
+ *  - CAJ-ABIERTAS-001: getCajasAbiertas LOADING -> SUCCESS on 2xx (non-empty)
+ *  - CAJ-ABIERTAS-002: getCajasAbiertas SUCCESS with empty list (no open cajas)
+ *  - CAJ-ABIERTAS-003: getCajasAbiertas ERROR(parsed mensaje) on 5xx
+ *  - CAJ-ABIERTAS-004: getCajasAbiertas ERROR("No hay conexion a internet") on IOException
+ *  - CAJ-ABIERTAS-005: getCajasAbiertasState returns the same instance across calls
  *  - CAJ-GET-001:   getCaja(id) LOADING -> SUCCESS on 2xx
  *  - CAJ-GET-002:   getCaja(id) ERROR(parsed mensaje) on 4xx
  *  - CAJ-GET-003:   getCaja(id) ERROR("No hay conexion a internet") on IOException
@@ -52,7 +57,7 @@ import retrofit2.Response;
  *  - CAJ-CERRAR-002: cerrarCaja(id, request) ERROR(parsed mensaje) on 4xx
  *  - CAJ-CERRAR-003: cerrarCaja(id, request) ERROR("No hay conexion a internet") on IOException
  *  - CAJ-CERRAR-004: cerrarState returns the same instance across calls
- *  - CAJ-DI-001:    all 4 state instances must be pairwise distinct
+ *  - CAJ-DI-001:    all 5 state instances must be pairwise distinct
  *
  * <p>The cajas entity has no client-side validation guards: open/closed
  * transitions are enforced by the server and surfaced through
@@ -448,11 +453,12 @@ public class CajaRepositoryImplTest {
 
         List<LiveData<?>> all = new ArrayList<>();
         all.add(repo.getCajasState());
+        all.add(repo.getCajasAbiertasState());
         all.add(repo.getCajaState());
         all.add(repo.getAbrirState());
         all.add(repo.getCerrarState());
 
-        // The four state instances must be pairwise distinct so that a
+        // The five state instances must be pairwise distinct so that a
         // SUCCESS/ERROR on one verb does not appear on another.
         for (int i = 0; i < all.size(); i++) {
             for (int j = i + 1; j < all.size(); j++) {
@@ -461,6 +467,132 @@ public class CajaRepositoryImplTest {
                         all.get(i) != all.get(j));
             }
         }
+    }
+
+    // ------------------------------------------------------------------
+    // getCajasAbiertas()  --  spec CAJ-ABIERTAS-001
+    // ------------------------------------------------------------------
+
+    @Test
+    public void getCajasAbiertasEmitsLoadingThenSuccessOn2xx() {
+        // Triangulation: non-empty success path.
+        FakeCajaApi api = new FakeCajaApi();
+        List<CajaDto> data = new ArrayList<>();
+        CajaDto a = new CajaDto();
+        a.setId(1);
+        a.setEstado("Abierta");
+        CajaDto b = new CajaDto();
+        b.setId(2);
+        b.setEstado("Abierta");
+        data.add(a);
+        data.add(b);
+        api.getCajasAbiertasResponse = Response.success(data);
+        CajaRepositoryImpl repo = new CajaRepositoryImpl(api);
+
+        LiveData<UiState<List<CajaDto>>> state = repo.getCajasAbiertasState();
+        EmissionRecorder<UiState<List<CajaDto>>> recorder = recordEmissions(state);
+        try {
+            repo.getCajasAbiertas();
+
+            assertTrue("expected LOADING, got: " + recorder.seen, recorder.seen.contains(UiState.Status.LOADING));
+            assertTrue("expected SUCCESS, got: " + recorder.seen, recorder.seen.contains(UiState.Status.SUCCESS));
+            assertEquals(UiState.Status.LOADING, recorder.seen.get(0));
+            assertEquals(UiState.Status.SUCCESS, recorder.seen.get(recorder.seen.size() - 1));
+            assertEquals(1, api.getCajasAbiertasCallCount);
+        } finally {
+            recorder.cleanup(state);
+        }
+    }
+
+    @Test
+    public void getCajasAbiertasEmitsSuccessWithEmptyListWhenNoCajasAbiertas() {
+        // Spec CAJ-ABIERTAS-002: empty list (200) is a valid success
+        // state — the UI should render "no hay cajas abiertas".
+        FakeCajaApi api = new FakeCajaApi();
+        api.getCajasAbiertasResponse = Response.success(new ArrayList<>());
+        CajaRepositoryImpl repo = new CajaRepositoryImpl(api);
+
+        LiveData<UiState<List<CajaDto>>> state = repo.getCajasAbiertasState();
+        AtomicReference<UiState<List<CajaDto>>> latest = new AtomicReference<>();
+        Observer<UiState<List<CajaDto>>> observer = latest::set;
+        state.observeForever(observer);
+        try {
+            repo.getCajasAbiertas();
+
+            UiState<List<CajaDto>> after = latest.get();
+            assertNotNull(after);
+            assertEquals(UiState.Status.SUCCESS, after.getStatus());
+            assertNotNull(after.getData());
+            assertTrue("empty-list success must have an empty data payload",
+                    after.getData().isEmpty());
+        } finally {
+            state.removeObserver(observer);
+        }
+    }
+
+    @Test
+    public void getCajasAbiertasEmitsErrorWithParsedMensajeOn500() {
+        // Spec CAJ-ABIERTAS-003: server error (e.g. 500) must surface
+        // the parsed `mensaje` from the error envelope.
+        FakeCajaApi api = new FakeCajaApi();
+        api.getCajasAbiertasResponse = errorResponse(500, "{\"mensaje\":\"Falla interna del servidor\"}");
+        CajaRepositoryImpl repo = new CajaRepositoryImpl(api);
+
+        LiveData<UiState<List<CajaDto>>> state = repo.getCajasAbiertasState();
+        AtomicReference<UiState<List<CajaDto>>> latest = new AtomicReference<>();
+        Observer<UiState<List<CajaDto>>> observer = latest::set;
+        state.observeForever(observer);
+        try {
+            repo.getCajasAbiertas();
+
+            UiState<List<CajaDto>> after = latest.get();
+            assertNotNull(after);
+            assertEquals(UiState.Status.ERROR, after.getStatus());
+            assertEquals("Falla interna del servidor", after.getError());
+        } finally {
+            state.removeObserver(observer);
+        }
+    }
+
+    @Test
+    public void getCajasAbiertasEmitsNetworkErrorOnIOException() {
+        // Spec CAJ-ABIERTAS-004: network failure must emit the
+        // "No hay conexión a internet" message.
+        FakeCajaApi api = new FakeCajaApi();
+        api.getCajasAbiertasFailure = new IOException("boom");
+        CajaRepositoryImpl repo = new CajaRepositoryImpl(api);
+
+        LiveData<UiState<List<CajaDto>>> state = repo.getCajasAbiertasState();
+        AtomicReference<UiState<List<CajaDto>>> latest = new AtomicReference<>();
+        Observer<UiState<List<CajaDto>>> observer = latest::set;
+        state.observeForever(observer);
+        try {
+            repo.getCajasAbiertas();
+
+            UiState<List<CajaDto>> after = latest.get();
+            assertNotNull(after);
+            assertEquals(UiState.Status.ERROR, after.getStatus());
+            assertEquals("No hay conexión a internet", after.getError());
+        } finally {
+            state.removeObserver(observer);
+        }
+    }
+
+    @Test
+    public void getCajasAbiertasStateReturnsSameInstanceAcrossCalls() {
+        // Single-instance pattern: the state LiveData must be the same
+        // across calls so observers registered in the ViewModel ctor
+        // keep receiving emissions across retries.
+        FakeCajaApi api = new FakeCajaApi();
+        api.getCajasAbiertasResponse = Response.success(new ArrayList<>());
+        CajaRepositoryImpl repo = new CajaRepositoryImpl(api);
+
+        LiveData<UiState<List<CajaDto>>> first = repo.getCajasAbiertasState();
+        LiveData<UiState<List<CajaDto>>> second = repo.getCajasAbiertasState();
+        assertSame(first, second);
+
+        repo.getCajasAbiertas();
+        assertSame(first, repo.getCajasAbiertasState());
     }
 
     // ------------------------------------------------------------------
@@ -492,6 +624,15 @@ public class CajaRepositoryImplTest {
         public Call<List<CajaDto>> getCajas(String estado) {
             this.lastCajasEstado = estado;
             return new FakeCall<>(getCajasResponse, getCajasFailure);
+        }
+
+        Response<List<CajaDto>> getCajasAbiertasResponse;
+        Throwable getCajasAbiertasFailure;
+        int getCajasAbiertasCallCount;
+        @Override
+        public Call<List<CajaDto>> getCajasAbiertas() {
+            this.getCajasAbiertasCallCount++;
+            return new FakeCall<>(getCajasAbiertasResponse, getCajasAbiertasFailure);
         }
 
         Response<CajaDto> getCajaResponse;

@@ -41,6 +41,21 @@ public interface CajaRepository {
     LiveData<UiState<List<CajaDto>>> getCajasState();
 
     /**
+     * Fetches the list of currently open cajas via the dedicated
+     * {@code GET api/cajas/abiertas} endpoint (Spec CAJ-ABIERTAS-001).
+     * Each call resets the dedicated {@link #getCajasAbiertasState()}
+     * instance to LOADING and posts SUCCESS (with the list, which
+     * may be empty when no caja is open) or ERROR.
+     */
+    LiveData<UiState<List<CajaDto>>> getCajasAbiertas();
+
+    /**
+     * Returns the single {@link LiveData} instance that holds the
+     * current state of {@link #getCajasAbiertas()} calls.
+     */
+    LiveData<UiState<List<CajaDto>>> getCajasAbiertasState();
+
+    /**
      * Fetches a single caja by id. Each call resets the dedicated
      * {@link #getCajaState()} instance to LOADING and posts SUCCESS
      * (with the dto) or ERROR.
