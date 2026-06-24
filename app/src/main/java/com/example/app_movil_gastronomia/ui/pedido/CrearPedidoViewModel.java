@@ -242,30 +242,32 @@ public class CrearPedidoViewModel extends ViewModel {
     }
 
     // ------------------------------------------------------------------
-    // Test diagnostics
+    // Request building
     // ------------------------------------------------------------------
 
-    /** Test-only: how many times the VM registered an observer. */
-    @VisibleForTesting
-    int getObserverRegistrationCount() {
-        return observerRegistrationCount.get();
-    }
-
     /**
-     * Convenience for tests/UI: builds the {@link CrearPedidoRequest}
-     * from primitive form values, with the {@code cajaId} field left
-     * null (server auto-assigns) and the {@code demoraAprox} field
-     * left null.
+     * Builds the {@link CrearPedidoRequest} from primitive form values
+     * plus the UI-layer {@link DetalleLine} list. The mapping from
+     * {@code DetalleLine} to {@code CrearDetalleRequest} happens here
+     * (via {@link #mapDetalles(List)}) so the fragment never needs to
+     * import the wire DTO.
+     *
+     * <p>The {@code cajaId} and {@code demoraAprox} fields are left
+     * {@code null} (server auto-assigns the caja, client UI does not
+     * collect a demora yet).</p>
+     *
+     * <p>Spec PED-CRUD-001 / pedido-creacion "DetalleLine maps to
+     * CrearDetalleRequest" — the resulting {@code detalles} list is
+     * set on the request here, completing the UI → wire boundary.</p>
      */
-    @VisibleForTesting
-    static CrearPedidoRequest buildRequest(
+    public CrearPedidoRequest buildRequest(
             String clienteNombre,
             int metodoVentaId,
             int metodoPagoId,
             String clienteDireccion,
             Double latitudDestino,
             Double longitudDestino,
-            List<CrearDetalleRequest> detalles
+            List<DetalleLine> detalles
     ) {
         CrearPedidoRequest request = new CrearPedidoRequest();
         request.setCajaId(null);
@@ -277,14 +279,23 @@ public class CrearPedidoViewModel extends ViewModel {
         request.setLongitudDestino(longitudDestino);
         request.setDemoraAprox(null);
 
+        List<CrearDetalleRequest> detalleDtos = mapDetalles(detalles);
         double total = 0d;
-        if (detalles != null) {
-            for (CrearDetalleRequest d : detalles) {
-                total += d.getPrecio() * d.getCantidad();
-            }
+        for (CrearDetalleRequest d : detalleDtos) {
+            total += d.getPrecio() * d.getCantidad();
         }
         request.setTotalEstimado(total);
-        request.setDetalles(detalles != null ? detalles : new ArrayList<>());
+        request.setDetalles(detalleDtos);
         return request;
+    }
+
+    // ------------------------------------------------------------------
+    // Test diagnostics
+    // ------------------------------------------------------------------
+
+    /** Test-only: how many times the VM registered an observer. */
+    @VisibleForTesting
+    int getObserverRegistrationCount() {
+        return observerRegistrationCount.get();
     }
 }

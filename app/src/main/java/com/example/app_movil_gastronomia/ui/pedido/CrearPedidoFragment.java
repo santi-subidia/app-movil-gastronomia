@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.app_movil_gastronomia.R;
 import com.example.app_movil_gastronomia.core.UiState;
-import com.example.app_movil_gastronomia.data.dto.pedido.CrearDetalleRequest;
 import com.example.app_movil_gastronomia.data.dto.pedido.CrearPedidoRequest;
 import com.example.app_movil_gastronomia.data.dto.pedido.PedidoDetalleDto;
 import com.example.app_movil_gastronomia.data.dto.producto.ProductoDto;
@@ -84,10 +83,12 @@ public class CrearPedidoFragment extends Fragment {
 
     /**
      * Detalle lines currently in the form. Edited in-place as the user
-     * adds / removes rows; serialized into the request right before
-     * the create call.
+     * adds / removes rows. The list holds UI-layer
+     * {@link DetalleLine} objects; the conversion to the wire
+     * {@code CrearDetalleRequest} happens in
+     * {@link CrearPedidoViewModel#mapDetalles(List)} at submit time.
      */
-    private final List<CrearDetalleRequest> detalles = new ArrayList<>();
+    private final List<DetalleLine> detalles = new ArrayList<>();
 
     /** Last product list received from the VM, used to populate the picker. */
     private List<ProductoDto> lastProductos = new ArrayList<>();
@@ -296,9 +297,9 @@ public class CrearPedidoFragment extends Fragment {
     private void addDetalle(ProductoDto producto, int cantidad) {
         // If the same product is already in the list, merge by summing quantity.
         for (int i = 0; i < detalles.size(); i++) {
-            CrearDetalleRequest existing = detalles.get(i);
+            DetalleLine existing = detalles.get(i);
             if (existing.getProductoId() == producto.getId()) {
-                CrearDetalleRequest merged = new CrearDetalleRequest(
+                DetalleLine merged = new DetalleLine(
                         existing.getProductoId(),
                         existing.getNombre(),
                         existing.getPrecio(),
@@ -309,7 +310,7 @@ public class CrearPedidoFragment extends Fragment {
                 return;
             }
         }
-        detalles.add(new CrearDetalleRequest(
+        detalles.add(new DetalleLine(
                 producto.getId(),
                 producto.getNombre(),
                 producto.getPrecio(),
@@ -332,7 +333,7 @@ public class CrearPedidoFragment extends Fragment {
 
     private void renderTotal() {
         double total = 0d;
-        for (CrearDetalleRequest d : detalles) {
+        for (DetalleLine d : detalles) {
             total += d.getPrecio() * d.getCantidad();
         }
         binding.textTotal.setText(String.format(Locale.getDefault(), "Total: $%.0f", total));
@@ -366,23 +367,19 @@ public class CrearPedidoFragment extends Fragment {
             longitud = parseDouble(textOf(binding.inputLongitud));
         }
 
-        CrearPedidoRequest request = new CrearPedidoRequest();
-        request.setCajaId(null);
-        request.setClienteNombre(clienteNombre);
-        request.setMetodoVentaId(metodoVentaId);
-        request.setMetodoPagoId(metodoPagoId);
-        request.setClienteDireccion(clienteDireccion);
-        request.setLatitudDestino(latitud);
-        request.setLongitudDestino(longitud);
-        request.setDemoraAprox(null);
-        request.setDetalles(new ArrayList<>(detalles));
-
-        double total = 0d;
-        for (CrearDetalleRequest d : detalles) {
-            total += d.getPrecio() * d.getCantidad();
-        }
-        request.setTotalEstimado(total);
-        return request;
+        // Delegate request building to the ViewModel so the fragment
+        // never imports the wire DTO (CrearDetalleRequest). The VM
+        // maps DetalleLine → CrearDetalleRequest internally and
+        // computes totalEstimado from the mapped DTOs.
+        return viewModel.buildRequest(
+                clienteNombre,
+                metodoVentaId,
+                metodoPagoId,
+                clienteDireccion,
+                latitud,
+                longitud,
+                detalles
+        );
     }
 
     private int currentMetodoVentaId() {

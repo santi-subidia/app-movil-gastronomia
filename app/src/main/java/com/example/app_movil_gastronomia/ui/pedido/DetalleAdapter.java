@@ -11,7 +11,6 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_movil_gastronomia.R;
-import com.example.app_movil_gastronomia.data.dto.pedido.CrearDetalleRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +19,16 @@ import java.util.Locale;
 /**
  * RecyclerView adapter for the in-progress pedido's detalle lines.
  *
- * <p>Each row is a {@link CrearDetalleRequest} snapshot: producto
- * name, quantity, line subtotal, and a delete button. The host
+ * <p>Each row is a {@link DetalleLine} snapshot: producto name,
+ * quantity, line subtotal, and a delete button. The host
  * ({@link CrearPedidoFragment}) rebuilds the list on every add /
  * remove so this adapter is intentionally a "dumb" rendering
  * surface — no diffing, no animations.</p>
+ *
+ * <p>Spec PED-CRUD-001 / pedido-creacion "DetalleAdapter renders
+ * DetalleLine": the adapter does not know about the wire DTO
+ * {@code CrearDetalleRequest} — that mapping happens in
+ * {@link CrearPedidoViewModel#mapDetalles(List)} at submit time.</p>
  */
 public class DetalleAdapter extends RecyclerView.Adapter<DetalleAdapter.DetalleViewHolder> {
 
@@ -33,14 +37,14 @@ public class DetalleAdapter extends RecyclerView.Adapter<DetalleAdapter.DetalleV
         void onDelete(int position);
     }
 
-    private final List<CrearDetalleRequest> items = new ArrayList<>();
+    private final List<DetalleLine> items = new ArrayList<>();
     private OnDeleteClickListener deleteListener;
 
     public void setOnDeleteClickListener(OnDeleteClickListener listener) {
         this.deleteListener = listener;
     }
 
-    public void submitList(List<CrearDetalleRequest> newItems) {
+    public void submitList(List<DetalleLine> newItems) {
         items.clear();
         if (newItems != null) {
             items.addAll(newItems);
@@ -48,7 +52,7 @@ public class DetalleAdapter extends RecyclerView.Adapter<DetalleAdapter.DetalleV
         notifyDataSetChanged();
     }
 
-    public CrearDetalleRequest getItem(int position) {
+    public DetalleLine getItem(int position) {
         return items.get(position);
     }
 
@@ -66,7 +70,7 @@ public class DetalleAdapter extends RecyclerView.Adapter<DetalleAdapter.DetalleV
 
     @Override
     public void onBindViewHolder(@NonNull DetalleViewHolder holder, int position) {
-        CrearDetalleRequest detalle = items.get(position);
+        DetalleLine detalle = items.get(position);
 
         holder.nombre.setText(detalle.getNombre() != null ? detalle.getNombre() : "");
         holder.cantidad.setText(String.format(Locale.getDefault(), "x%d", detalle.getCantidad()));
