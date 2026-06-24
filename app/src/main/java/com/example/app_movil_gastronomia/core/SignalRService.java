@@ -6,7 +6,7 @@ import com.example.app_movil_gastronomia.data.dto.signalr.DemoraRegistradaMessag
 import com.example.app_movil_gastronomia.data.dto.signalr.EstadoCambiadoMessage;
 import com.example.app_movil_gastronomia.data.dto.signalr.NuevoPedidoMessage;
 import com.example.app_movil_gastronomia.data.dto.signalr.PedidoFinalizadoMessage;
-import com.example.app_movil_gastronomia.data.dto.signalr.PosicionGPSMessage;
+import com.example.app_movil_gastronomia.data.dto.signalr.PosicionGPSActualizadaMessage;
 import com.example.app_movil_gastronomia.data.dto.signalr.RepartidorAsignadoMessage;
 
 /**
@@ -81,7 +81,7 @@ public interface SignalRService {
     LiveData<DemoraRegistradaMessage> getDemoraRegistrada();
 
     /** Emitted when a repartidor broadcasts their GPS position. */
-    LiveData<PosicionGPSMessage> getPosicionGPS();
+    LiveData<PosicionGPSActualizadaMessage> getPosicionGPSActualizada();
 
     /** Emitted when a pedido reaches a terminal state. */
     LiveData<PedidoFinalizadoMessage> getPedidoFinalizado();

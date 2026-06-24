@@ -11,7 +11,7 @@ import com.example.app_movil_gastronomia.data.dto.signalr.DemoraRegistradaMessag
 import com.example.app_movil_gastronomia.data.dto.signalr.EstadoCambiadoMessage;
 import com.example.app_movil_gastronomia.data.dto.signalr.NuevoPedidoMessage;
 import com.example.app_movil_gastronomia.data.dto.signalr.PedidoFinalizadoMessage;
-import com.example.app_movil_gastronomia.data.dto.signalr.PosicionGPSMessage;
+import com.example.app_movil_gastronomia.data.dto.signalr.PosicionGPSActualizadaMessage;
 import com.example.app_movil_gastronomia.data.dto.signalr.RepartidorAsignadoMessage;
 import com.microsoft.signalr.HubConnection;
 import com.microsoft.signalr.HubConnectionBuilder;
@@ -62,7 +62,7 @@ public class SignalRServiceImpl implements SignalRService {
     private final MutableLiveData<EstadoCambiadoMessage> _estadoCambiado = new MutableLiveData<>();
     private final MutableLiveData<RepartidorAsignadoMessage> _repartidorAsignado = new MutableLiveData<>();
     private final MutableLiveData<DemoraRegistradaMessage> _demoraRegistrada = new MutableLiveData<>();
-    private final MutableLiveData<PosicionGPSMessage> _posicionGPS = new MutableLiveData<>();
+    private final MutableLiveData<PosicionGPSActualizadaMessage> _posicionGPSActualizada = new MutableLiveData<>();
     private final MutableLiveData<PedidoFinalizadoMessage> _pedidoFinalizado = new MutableLiveData<>();
     private final MutableLiveData<Boolean> _connected = new MutableLiveData<>(false);
     private final MutableLiveData<String> _error = new MutableLiveData<>();
@@ -213,8 +213,8 @@ public class SignalRServiceImpl implements SignalRService {
     }
 
     @Override
-    public LiveData<PosicionGPSMessage> getPosicionGPS() {
-        return _posicionGPS;
+    public LiveData<PosicionGPSActualizadaMessage> getPosicionGPSActualizada() {
+        return _posicionGPSActualizada;
     }
 
     @Override
@@ -259,9 +259,9 @@ public class SignalRServiceImpl implements SignalRService {
                 (DemoraRegistradaMessage msg) -> _demoraRegistrada.postValue(msg),
                 DemoraRegistradaMessage.class);
 
-        conn.on("PosicionGPS",
-                (PosicionGPSMessage msg) -> _posicionGPS.postValue(msg),
-                PosicionGPSMessage.class);
+        conn.on("PosicionGPSActualizada",
+                (PosicionGPSActualizadaMessage msg) -> _posicionGPSActualizada.postValue(msg),
+                PosicionGPSActualizadaMessage.class);
 
         conn.on("PedidoFinalizado",
                 (PedidoFinalizadoMessage msg) -> _pedidoFinalizado.postValue(msg),

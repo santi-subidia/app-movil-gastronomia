@@ -25,6 +25,7 @@ import com.example.app_movil_gastronomia.core.SignalRService;
 import com.example.app_movil_gastronomia.core.TokenManager;
 import com.example.app_movil_gastronomia.core.UiState;
 import com.example.app_movil_gastronomia.data.dto.pedido.PedidoResumenDto;
+import com.example.app_movil_gastronomia.data.dto.signalr.PosicionGPSActualizadaMessage;
 import com.example.app_movil_gastronomia.data.repository.contract.PedidoRepository;
 
 import java.text.SimpleDateFormat;
@@ -119,7 +120,7 @@ public class MapaViewModel extends ViewModel {
 
     // ---- Observer bookkeeping ----
     private final Observer<UiState<List<PedidoResumenDto>>> repositoryObserver;
-    private final Observer<com.example.app_movil_gastronomia.data.dto.signalr.PosicionGPSMessage> posicionGpsObserver;
+    private final Observer<PosicionGPSActualizadaMessage> posicionGpsObserver;
     private final Observer<Boolean> connectedObserver;
 
     private final AtomicInteger observerRegistrationCount = new AtomicInteger(0);
@@ -170,7 +171,7 @@ public class MapaViewModel extends ViewModel {
                 if (myId > 0 && msg.getRepartidorId() != myId) return;
                 gpsState.setValue(formatCoords(msg.getLatitud(), msg.getLongitud()));
             };
-            signalRService.getPosicionGPS().observeForever(posicionGpsObserver);
+            signalRService.getPosicionGPSActualizada().observeForever(posicionGpsObserver);
             observerRegistrationCount.incrementAndGet();
 
             this.connectedObserver = isConnected -> {
@@ -491,7 +492,7 @@ public class MapaViewModel extends ViewModel {
         pedidoRepository.getPedidosState().removeObserver(repositoryObserver);
         if (signalRService != null) {
             if (posicionGpsObserver != null) {
-                signalRService.getPosicionGPS().removeObserver(posicionGpsObserver);
+                signalRService.getPosicionGPSActualizada().removeObserver(posicionGpsObserver);
             }
             if (connectedObserver != null) {
                 signalRService.getConnected().removeObserver(connectedObserver);

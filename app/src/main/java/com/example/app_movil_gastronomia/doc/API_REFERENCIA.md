@@ -715,7 +715,7 @@ interface SignalRService {
     val cambiosEstado: Flow<EstadoCambiadoMessage>
     val repartidorAsignado: Flow<RepartidorAsignadoMessage>
     val demoraRegistrada: Flow<DemoraRegistradaMessage>
-    val posicionGPS: Flow<PosicionGPSMessage>
+    val posicionGPS: Flow<PosicionGPSActualizadaMessage>
     val pedidoFinalizado: Flow<PedidoFinalizadoMessage>
 }
 ```
