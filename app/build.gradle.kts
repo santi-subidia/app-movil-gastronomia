@@ -67,4 +67,9 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.hilt.android.testing)
+    // Hilt generates *_HiltComponents + *_TestComponentDataSupplier for
+    // every @HiltAndroidTest class. Without this annotation processor on
+    // the androidTest source set, instrumented Hilt tests fail at runtime
+    // with "missing generated file: ..._TestComponentDataSupplier".
+    add("androidTestAnnotationProcessor", libs.hilt.compiler)
 }

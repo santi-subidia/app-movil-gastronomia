@@ -46,12 +46,12 @@ Chain strategy: pending
 
 ## Phase 3: MainActivity Wiring
 
-- [ ] 3.1 **MainActivity.java** — Inject `TokenManager`; add `isCheckingSession` flag; show splash, check `hasToken()`, decode expiry, route role→home or login
-- [ ] 3.2 **MainActivity.java** — `configureBottomNav(role)`: `menu.clear()` + `menu.add(id, title, icon)` per role; `NavigationUI.setupWithNavController()`
-- [ ] 3.3 **MainActivity.java** — Fix `AppBarConfiguration` to `Set.of(nav_cajero_home, nav_cocina_home, nav_repartidor_home)` + `setOpenableLayout(drawer)`
-- [ ] 3.4 **MainActivity.java** — Add `ActionBarDrawerToggle`; `bindDrawerHeader()` binds name+role from TokenManager; handle drawer `nav_cerrar_sesion` item
-- [ ] 3.5 **MainActivity.java** — `onCreateOptionsMenu` inflate `main_options_menu`; `onOptionsItemSelected` handle `action_logout`
-- [ ] 3.6 **MainActivity.java** — `performLogout()`: `clearToken()`, `sessionManager.consume()`, navigate to `nav_login` with `popUpTo(mobile_navigation, inclusive=true)`
+- [x] 3.1 **MainActivity.java** — Inject `TokenManager`; add `isCheckingSession` flag; show splash, check `hasToken()`, decode expiry, route role→home or login
+- [x] 3.2 **MainActivity.java** — `configureBottomNav(role)`: `menu.clear()` + `menu.add(id, title).setIcon()` per role; `NavigationUI.setupWithNavController()`
+- [x] 3.3 **MainActivity.java** — Fix `AppBarConfiguration` to `Set.of(nav_cajero_home, nav_cocina_home, nav_repartidor_home)` + `setOpenableLayout(drawer)`
+- [x] 3.4 **MainActivity.java** — Add `ActionBarDrawerToggle`; `bindDrawerHeader()` binds name+role from TokenManager; handle drawer `nav_cerrar_sesion` item
+- [x] 3.5 **MainActivity.java** — `onCreateOptionsMenu` inflate `main_options_menu`; `onOptionsItemSelected` handle `action_logout`
+- [x] 3.6 **MainActivity.java** — `performLogout()`: `clearToken()`, `sessionManager.consume()`, navigate to `nav_login` with `popUpTo(mobile_navigation, inclusive=true)`
 
 ## Phase 4: Testing
 

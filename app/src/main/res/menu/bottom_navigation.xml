@@ -8,6 +8,11 @@
         configureBottomNav(role) which does menu.clear() then menu.add(id, title).setIcon()
         for the role's allowed destinations, so only the relevant items end up visible
         at runtime. IDs here MUST match the nav graph destination IDs.
+
+        IMPORTANT: BottomNavigationView enforces a hard max of 6 items at construction
+        time (before menu.clear() runs), so this pool is capped at 6. The Repartidor-only
+        nav_mapa item is added programmatically by configureBottomNav("repartidor")
+        and therefore does not need to live in the placeholder pool.
     -->
     <group android:checkableBehavior="single">
         <item
@@ -34,9 +39,5 @@
             android:id="@+id/nav_caja"
             android:icon="@drawable/ic_caja_24dp"
             android:title="@string/caja_title" />
-        <item
-            android:id="@+id/nav_mapa"
-            android:icon="@drawable/ic_mapa_24dp"
-            android:title="@string/mapa_title" />
     </group>
 </menu>
