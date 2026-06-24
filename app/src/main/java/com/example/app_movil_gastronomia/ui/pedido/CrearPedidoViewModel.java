@@ -204,6 +204,44 @@ public class CrearPedidoViewModel extends ViewModel {
     }
 
     // ------------------------------------------------------------------
+    // DetalleLine → CrearDetalleRequest mapping
+    // ------------------------------------------------------------------
+
+    /**
+     * Maps the UI-layer {@link DetalleLine} list to a list of
+     * {@link CrearDetalleRequest} wire DTOs, preserving order.
+     *
+     * <p>Spec PED-CRUD-001 / pedido-creacion "DetalleLine maps to
+     * CrearDetalleRequest": every field of {@code DetalleLine} is
+     * copied 1:1 to the matching DTO field. The mapping is one-way
+     * (UI → wire) and happens exactly once, at submit time, in the
+     * ViewModel so the {@code CrearPedidoFragment} and
+     * {@code DetalleAdapter} never need to import the DTO.</p>
+     *
+     * <p>A {@code null} or empty input returns an empty list — never
+     * {@code null} — so the caller can chain
+     * {@code request.setDetalles(...)} unconditionally.</p>
+     *
+     * @param lines UI-layer detail lines; may be {@code null} or empty
+     * @return a non-null, order-preserving list of DTOs (possibly empty)
+     */
+    public static List<CrearDetalleRequest> mapDetalles(List<DetalleLine> lines) {
+        List<CrearDetalleRequest> out = new ArrayList<>();
+        if (lines == null) {
+            return out;
+        }
+        for (DetalleLine line : lines) {
+            out.add(new CrearDetalleRequest(
+                    line.getProductoId(),
+                    line.getNombre(),
+                    line.getPrecio(),
+                    line.getCantidad()
+            ));
+        }
+        return out;
+    }
+
+    // ------------------------------------------------------------------
     // Test diagnostics
     // ------------------------------------------------------------------
 
