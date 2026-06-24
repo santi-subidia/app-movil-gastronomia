@@ -663,6 +663,44 @@ public class PedidoRepositoryImplTest {
     }
 
     @Test
+    public void cambiarEstadoEmitsErrorWhenEstadoNotInCatalog() {
+        // Spec PED-ENUM-002 (v2): when the catalog cache is ready but
+        // does NOT contain the requested enum's apiValue, the resolver
+        // returns -1 (per CatalogoRepository contract). The repo must
+        // surface a clear, specific error and MUST NOT call the API.
+        FakePedidoApi api = new FakePedidoApi();
+        api.cambiarEstadoResponse = Response.success(new PedidoDetalleDto());
+        // Catalog IS ready but only contains a single, different estado.
+        Map<String, Integer> partial = new HashMap<>();
+        partial.put("Pendiente", 100);
+        FakeCatalogoRepository partialCatalog = new FakeCatalogoRepository(partial, true);
+        PedidoRepositoryImpl repo = new PedidoRepositoryImpl(api, partialCatalog);
+
+        LiveData<UiState<PedidoDetalleDto>> state = repo.getCambiarEstadoState();
+        AtomicReference<UiState<PedidoDetalleDto>> latest = new AtomicReference<>();
+        Observer<UiState<PedidoDetalleDto>> observer = latest::set;
+        state.observeForever(observer);
+        try {
+            // EN_PREPARACION is not in the partial catalog — resolveEstadoId
+            // returns -1 and the repo must short-circuit with an error.
+            repo.cambiarEstado(1, EstadoPedidoEnum.EN_PREPARACION);
+
+            UiState<PedidoDetalleDto> after = latest.get();
+            assertNotNull(after);
+            assertEquals(UiState.Status.ERROR, after.getStatus());
+            assertNotNull(after.getError());
+            assertTrue("error must mention 'no reconocido', got: " + after.getError(),
+                    after.getError().toLowerCase().contains("no reconoc"));
+            assertTrue("error must include the offending apiValue, got: " + after.getError(),
+                    after.getError().contains("EnPreparacion"));
+            // API must NOT be called when the estado is unknown.
+            assertEquals(-1, api.lastCambiarEstadoId);
+        } finally {
+            state.removeObserver(observer);
+        }
+    }
+
+    @Test
     public void cambiarEstadoStateReturnsSameInstanceAcrossCalls() {
         FakePedidoApi api = new FakePedidoApi();
         api.cambiarEstadoResponse = Response.success(new PedidoDetalleDto());
