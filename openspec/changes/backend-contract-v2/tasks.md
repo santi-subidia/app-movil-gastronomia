@@ -56,11 +56,11 @@ Chain strategy: stacked-to-main
 
 ## PR3: CrearPedido UI Refactor (CREATE / MODIFY)
 
-- [ ] 3.1 Create `DetalleLine` POJO in `ui/pedido/` with 4 fields
-- [ ] 3.2 Refactor `DetalleAdapter`: `List<CrearDetalleRequest>` → `List<DetalleLine>`
-- [ ] 3.3 Refactor `CrearPedidoFragment`: list type, addDetalle, buildRequest mapping
-- [ ] 3.4 Add `buildRequest()` in `CrearPedidoViewModel` — maps `DetalleLine` → `CrearDetalleRequest`
-- [ ] 3.5 Write mapping test: `DetalleLine` → `CrearDetalleRequest` fields match
+- [x] 3.1 Create `DetalleLine` POJO in `ui/pedido/` with 4 fields
+- [x] 3.2 Refactor `DetalleAdapter`: `List<CrearDetalleRequest>` → `List<DetalleLine>`
+- [x] 3.3 Refactor `CrearPedidoFragment`: list type, addDetalle, buildRequest mapping
+- [x] 3.4 Add `buildRequest()` in `CrearPedidoViewModel` — maps `List<DetalleLine>` → `List<CrearDetalleRequest>`
+- [x] 3.5 Write mapping test: `DetalleLine` → `CrearDetalleRequest` fields match
 
 ## PR4: Estado Body + Cajas Abiertas (MODIFY)
 
